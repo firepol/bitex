@@ -165,7 +165,7 @@ class Bitfinex(RESTInterface):
     def margin_info(self, **endpoint_kwargs):
         """Return margin information."""
         if self.REST.version == 'v1':
-            return self.request('margin_info', authenticate=True)
+            return self.request('margin_infos', authenticate=True)
         key = endpoint_kwargs.pop('key')
         return self.request('auth/r/margin/%s' % key, authenticate=True, params=endpoint_kwargs)
 
