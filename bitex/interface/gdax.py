@@ -152,3 +152,122 @@ class GDAX(RESTInterface):
         :return: :class:`requests.Response()` object.
         """
         return self.request('GET', 'accounts', authenticate=True, json=kwargs)
+
+    ###########################
+    # Exchange Specific Methods
+    ###########################
+
+    def account(self, account_id):
+        """
+        Information for a single account. Use this endpoint when you know the account_id.
+
+        https://docs.gdax.com/#get-an-account
+        """
+        return self.request('GET', 'accounts/{}'.format(account_id), authenticate=True)
+
+    def account_history(self, account_id, **kwargs):
+        """
+        List account activity. Account activity either increases or decreases your account balance. Items are paginated
+        and sorted latest first. See the Pagination section for retrieving additional entries after the first page.
+
+        https://docs.gdax.com/#get-account-history
+        """
+        return self.request('GET', 'accounts/{}/ledger'.format(account_id), authenticate=True, json=kwargs)
+
+    def account_holds(self, account_id, **kwargs):
+        """
+        Holds are placed on an account for any active orders or pending withdraw requests.
+        As an order is filled, the hold amount is updated. If an order is canceled, any remaining hold is removed.
+        For a withdraw, once it is completed, the hold is removed.
+
+        https://docs.gdax.com/#get-holds
+        """
+        return self.request('GET', 'accounts/{}/holds'.format(account_id), authenticate=True, json=kwargs)
+
+    def fills(self, **kwargs):
+        """
+        Get a list of recent fills.
+
+        You can request fills for specific orders or products using query parameters.
+
+        Param	Default	Description
+        order_id	all	Limit list of fills to this order_id
+        product_id	all	Limit list of fills to this product_id
+
+        https://docs.gdax.com/#list-fills
+        """
+        return self.request('GET', 'fills', authenticate=True, json=kwargs)
+
+    def deposit_from_payment_method(self, amount, currency, payment_method_id, **kwargs):
+        """
+        Deposit funds from a payment method. See the Payment Methods section for retrieving your payment methods.
+
+        https://docs.gdax.com/#payment-method
+        """
+        kwargs.update({'amount': amount, 'currency': currency.upper(), 'payment_method_id': payment_method_id})
+        return self.request('POST', 'deposits/payment-method', authenticate=True)
+
+    def deposit_from_coinbase(self, amount, currency, coinbase_account_id, **kwargs):
+        """
+        Deposit funds from a coinbase account. You can move funds between your Coinbase accounts and your GDAX trading
+        accounts within your daily limits. Moving funds between Coinbase and GDAX is instant and free. See the Coinbase
+        Accounts section for retrieving your Coinbase accounts.
+
+        https://docs.gdax.com/#coinbase
+        """
+        kwargs.update({'amount': amount, 'currency': currency.upper(), 'coinbase_account_id': coinbase_account_id})
+        return self.request('POST', 'deposits/coinbase-account', authenticate=True)
+
+    def withdraw_to_payment_method(self, amount, currency, payment_method_id, **kwargs):
+        """
+        Withdraw funds to a payment method. See the Payment Methods section for retrieving your payment methods.
+
+        https://docs.gdax.com/#payment-method47
+        """
+        kwargs.update({'amount': amount, 'currency': currency.upper(), 'payment_method_id': payment_method_id})
+        return self.request('POST', 'withdrawals/payment-method', authenticate=True)
+
+    def withdraw_to_coinbase(self, amount, currency, coinbase_account_id, **kwargs):
+        """
+        Withdraw funds to a coinbase account. You can move funds between your Coinbase accounts and your GDAX trading
+        accounts within your daily limits. Moving funds between Coinbase and GDAX is instant and free.
+        See the Coinbase Accounts section for retrieving your Coinbase accounts.
+
+        https://docs.gdax.com/#coinbase48
+        """
+        kwargs.update({'amount': amount, 'currency': currency.upper(), 'coinbase_account_id': coinbase_account_id})
+        return self.request('POST', 'withdrawals/coinbase-account', authenticate=True)
+
+    def withdraw(self, amount, currency, address, address_tag=None, **kwargs):
+        """
+        Withdraws funds to a crypto address.
+
+        https://docs.gdax.com/#crypto
+        """
+        kwargs.update({'amount': amount, 'currency': currency.upper(), 'crypto_address': address})
+        return self.request('POST', 'withdrawals/crypto', authenticate=True, json=kwargs)
+
+    def payment_methods(self):
+        """
+        Get a list of your payment methods.
+
+        https://docs.gdax.com/#list-payment-methods
+        """
+        return self.request('GET', 'payment-methods', authenticate=True)
+
+    def coinbase_accounts(self):
+        """
+        Get a list of your coinbase accounts.
+
+        https://docs.gdax.com/#list-accounts53
+        """
+        return self.request('GET', 'coinbase-accounts', authenticate=True)
+
+    def trailing_volume(self):
+        """
+        This request will return your 30-day trailing volume for all products.
+        This is a cached value that’s calculated every day at midnight UTC.
+
+        https://docs.gdax.com/#trailing-volume
+        """
+        return self.request('GET', 'users/self/trailing-volume', authenticate=True)
