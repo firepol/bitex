@@ -12,6 +12,7 @@ from bitex.formatters.gemini import GeminiFormattedResponse
 from bitex.formatters.hitbtc import HitBTCFormattedResponse
 from bitex.formatters.itbit import ItBitFormattedResponse
 from bitex.formatters.kraken import KrakenFormattedResponse
+from bitex.formatters.lykke import LykkeFormattedResponse
 from bitex.formatters.okcoin import OKCoinFormattedResponse
 from bitex.formatters.poloniex import PoloniexFormattedResponse
 from bitex.formatters.quadriga import QuadrigaCXFormattedResponse

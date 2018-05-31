@@ -11,6 +11,7 @@ from bitex.interface.gemini import Gemini
 from bitex.interface.hitbtc import HitBTC
 from bitex.interface.itbit import ItBit
 from bitex.interface.kraken import Kraken
+from bitex.interface.lykke import Lykke
 from bitex.interface.okcoin import OKCoin
 from bitex.interface.poloniex import Poloniex
 from bitex.interface.quadriga import QuadrigaCX

@@ -12,6 +12,7 @@ from bitex.api.REST.gemini import GeminiREST
 from bitex.api.REST.hitbtc import HitBTCREST
 from bitex.api.REST.itbit import ITbitREST
 from bitex.api.REST.kraken import KrakenREST
+from bitex.api.REST.lykke import LykkeREST
 from bitex.api.REST.okcoin import OKCoinREST
 from bitex.api.REST.poloniex import PoloniexREST
 from bitex.api.REST.quadriga import QuadrigaCXREST
